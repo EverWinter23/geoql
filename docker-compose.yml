@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: geoqlDB
+    image: mdillon/postgis:10
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: 'geoql'
+      POSTGRES_USER: 'postgis'
+      POSTGRES_PASSWORD: 'geoqlDB'
+      PGDATA: '/var/lib/postgresql/data/geoqlDB'
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/covidDB
+
+volumes:
+  postgres_data:
+
