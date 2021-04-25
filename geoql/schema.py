@@ -10,6 +10,7 @@ from formula1.mutation import (
 class Query(Formula1Query):
     greeting = graphene.JSONString()
 
+    @staticmethod
     def resolve_greeting(root, info):
         return "Hello, World!"
 

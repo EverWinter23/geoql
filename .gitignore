@@ -1,4 +1,6 @@
 .vscode
-*__pycache__
+.vim
 
-.env
+*__pycache__
+*node_modules
+

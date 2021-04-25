@@ -1,16 +1,20 @@
-import graphene
+from base64 import b64encode as b64E
 
-from graphene_gis.scalars import PolygonScalar
+import graphene
+from graphene.relay.node import to_global_id
+
+from graphene_gis.scalars import LineStringScalar
 from django.contrib.gis.geos import GEOSGeometry
 
 from formula1.models import F1Track
+from formula1.query import F1TrackType
 
 
 class CreateF1TrackMutationWithWKT(graphene.Mutation):
-    id = graphene.ID()
+    id = graphene.String()
     name = graphene.String()
     length = graphene.Int()
-    geometry = PolygonScalar()
+    geometry = LineStringScalar()
 
     class Arguments:
         name = graphene.String()
@@ -22,7 +26,7 @@ class CreateF1TrackMutationWithWKT(graphene.Mutation):
         track.save()
 
         return CreateF1TrackMutationWithWKT(
-            id=track.id,
+            id=to_global_id(F1TrackType.__name__, track.id),
             name=track.name,
             length=track.length,
             geometry=track.geometry,
@@ -33,7 +37,7 @@ class CreateF1TrackMutationWithGeoJSON(graphene.Mutation):
     id = graphene.ID()
     name = graphene.String()
     length = graphene.Int()
-    geometry = PolygonScalar()
+    geometry = LineStringScalar()
 
     class Arguments:
         name = graphene.String()
@@ -45,7 +49,7 @@ class CreateF1TrackMutationWithGeoJSON(graphene.Mutation):
         track.save()
 
         return CreateF1TrackMutationWithGeoJSON(
-            id=track.id,
+            id=to_global_id(F1TrackType.__name__, track.id),
             name=track.name,
             length=track.length,
             geometry=track.geometry,
